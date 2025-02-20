@@ -1,21 +1,30 @@
-import { clickCard } from "./memory.js";
+import { clickCard, items, selectCards, startGame } from "./memory.js";
 
-document.getElementById('co1').addEventListener('click', 
-function () { 
-    clickCard("co") 
+var game = $('#game');
+var cards = [];
+
+selectCards();
+
+items.forEach(function(value, indx){
+    cards.push(addAndGet(indx));
+    bindClickEvent(indx);
+    setValue(indx, value);
 });
 
-document.getElementById('co2').addEventListener('click', 
-function () { 
-    clickCard("co") 
-});
+startGame();
 
-document.getElementById('cb1').addEventListener('click', 
-function () {
-    clickCard("cb")
-});
+function addAndGet(id){ 
+    game.append(`<img id="${id}" title="card">`);
+    return $(`#${id}`);
+}
 
-document.getElementById('cb2').addEventListener('click', 
-function () {
-    clickCard("cb")
-});
+function bindClickEvent(indx){
+    cards[indx].on('click', function (){
+        clickCard(indx);
+    });
+}
+
+export function setValue(indx, value){
+    cards[indx].attr("src", value);
+}
+
