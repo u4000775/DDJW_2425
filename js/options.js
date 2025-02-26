@@ -8,10 +8,12 @@ var options = function(){
     var difficulty = $('#dif');
 
     var options = JSON.parse(localStorage.options||JSON.stringify(default_options));
-    pairs.val(options.pairs);
-    difficulty.val(options.difficulty);
+    
     pairs.on('change',()=>options.pairs = pairs.val());
     difficulty.on('change',()=>options.difficulty = difficulty.val());
+
+    pairs.val(options.pairs);
+    difficulty.val(options.difficulty);
 
     return { 
         applyChanges: function(){
