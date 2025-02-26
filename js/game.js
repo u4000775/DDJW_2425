@@ -1,30 +1,21 @@
-import { clickCard, items, selectCards, startGame } from "./memory.js";
-
+import { game as gController } from "./memory.js";
 var game = $('#game');
-var cards = [];
-
-selectCards();
-
-items.forEach(function(value, indx){
-    cards.push(addAndGet(indx));
-    bindClickEvent(indx);
-    setValue(indx, value);
+gController.selectCards(setValue).forEach((card, indx)=>{
+    let c = addAndGet(indx);
+    card.pointer = c;
+    bindClickEvent(card);
+    setValue(card);
 });
-
-startGame();
 
 function addAndGet(id){ 
     game.append(`<img id="${id}" title="card">`);
     return $(`#${id}`);
 }
 
-function bindClickEvent(indx){
-    cards[indx].on('click', function (){
-        clickCard(indx);
-    });
+function bindClickEvent(card){
+    card.pointer.on('click', () => gController.clickCard(card));
 }
-
-export function setValue(indx, value){
-    cards[indx].attr("src", value);
+function setValue(card){
+    card.pointer.attr("src", card.current);
 }
 
